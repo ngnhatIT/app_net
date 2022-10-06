@@ -104,3 +104,10 @@ C:\Users\nk_nhat\Desktop\app_net\apiapp\obj\Debug\net6.0\refint\apiapp.dll
 C:\Users\nk_nhat\Desktop\app_net\apiapp\obj\Debug\net6.0\apiapp.pdb
 C:\Users\nk_nhat\Desktop\app_net\apiapp\obj\Debug\net6.0\apiapp.genruntimeconfig.cache
 C:\Users\nk_nhat\Desktop\app_net\apiapp\obj\Debug\net6.0\ref\apiapp.dll
+C:\Users\nk_nhat\Desktop\app_net\apiapp\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\nk_nhat\Desktop\app_net\apiapp\bin\Debug\net6.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\nk_nhat\Desktop\app_net\apiapp\bin\Debug\net6.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\nk_nhat\Desktop\app_net\apiapp\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.dll
+C:\Users\nk_nhat\Desktop\app_net\apiapp\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\nk_nhat\Desktop\app_net\apiapp\bin\Debug\net6.0\Microsoft.IdentityModel.Tokens.dll
+C:\Users\nk_nhat\Desktop\app_net\apiapp\bin\Debug\net6.0\System.IdentityModel.Tokens.Jwt.dll
