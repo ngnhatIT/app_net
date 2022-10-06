@@ -1,6 +1,7 @@
 using apiapp.Interfaces;
 using apiapp.Model;
 using apiapp.ViewModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace apiapp.Controllers;
@@ -19,6 +20,7 @@ public class ProductController : ControllerBase
     }
 
     [HttpGet]
+    [Authorize]
     public async Task<ActionResult<IEnumerable<Product>>> Get()
     {
         var products = await _productRepository.GetAll();

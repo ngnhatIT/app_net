@@ -11,7 +11,6 @@ public static class MongoDbPersistence
 {
     public static void Configure()
     {
-        //BsonDefaults.GuidRepresentation = GuidRepresentation.CSharpLegacy;
         var pack = new ConventionPack
                 {
                     new IgnoreExtraElementsConvention(true),
