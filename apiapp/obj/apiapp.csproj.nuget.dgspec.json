@@ -1,27 +1,28 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Admin\\Desktop\\projects\\mongo_app\\apiapp\\apiapp.csproj": {}
+    "C:\\Users\\nk_nhat\\Desktop\\app_net\\apiapp\\apiapp.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Admin\\Desktop\\projects\\mongo_app\\apiapp\\apiapp.csproj": {
+    "C:\\Users\\nk_nhat\\Desktop\\app_net\\apiapp\\apiapp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Admin\\Desktop\\projects\\mongo_app\\apiapp\\apiapp.csproj",
+        "projectUniqueName": "C:\\Users\\nk_nhat\\Desktop\\app_net\\apiapp\\apiapp.csproj",
         "projectName": "apiapp",
-        "projectPath": "C:\\Users\\Admin\\Desktop\\projects\\mongo_app\\apiapp\\apiapp.csproj",
-        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Admin\\Desktop\\projects\\mongo_app\\apiapp\\obj\\",
+        "projectPath": "C:\\Users\\nk_nhat\\Desktop\\app_net\\apiapp\\apiapp.csproj",
+        "packagesPath": "C:\\Users\\nk_nhat\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\nk_nhat\\Desktop\\app_net\\apiapp\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
         "configFilePaths": [
-          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\nk_nhat\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -40,6 +41,10 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[6.0.9, )"
+            },
             "MongoDB.Driver": {
               "target": "Package",
               "version": "[2.17.1, )"
@@ -59,8 +64,7 @@
             "net47",
             "net471",
             "net472",
-            "net48",
-            "net481"
+            "net48"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -72,7 +76,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.400\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.300\\RuntimeIdentifierGraph.json"
         }
       }
     }
