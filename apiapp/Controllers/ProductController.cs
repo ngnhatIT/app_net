@@ -1,6 +1,7 @@
 using apiapp.Interfaces;
 using apiapp.Model;
 using apiapp.ViewModel;
+using FirebaseAdmin.Auth;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

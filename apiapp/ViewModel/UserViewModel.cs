@@ -2,6 +2,8 @@ namespace apiapp.ViewModel
 {
     public class UserViewModel
     {
-        public string Description { get; set; } = null!;
+        public string Email { get; set; } = null!;
+        public string PassWord { get; set; } = null!;
+        public string DisplayName { get; set; } = null!;
     }
 }
