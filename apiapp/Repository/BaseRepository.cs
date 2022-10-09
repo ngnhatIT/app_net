@@ -6,8 +6,8 @@ namespace apiapp.Repository;
 
 public abstract class BaseRepository<TEntity> : IRepository<TEntity> where TEntity : class
 {
-    protected readonly IMongoContext? Context;
-    protected IMongoCollection<TEntity>? DbSet;
+    protected readonly IMongoContext Context;
+    protected IMongoCollection<TEntity> DbSet;
 
     protected BaseRepository(IMongoContext context)
     {

@@ -1,11 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using apiapp.FirebaseAuthService.Payload;
 
-namespace apiapp.FirebaseAuthService.Interface
+namespace apiapp.FirebaseAuthService.Interface;
+
+public interface IFirebaseAuth
 {
-    public class IFirebaseAuth
-    {
-    }
+    Task<SignUpUserResponse> SignUp(SignUpUserRequest signUpUser);
 }
