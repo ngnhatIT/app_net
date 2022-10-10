@@ -1,8 +1,9 @@
 using apiapp;
 using apiapp.Context;
+using apiapp.FirebaseAuthService.Service;
 using apiapp.Interfaces;
 using apiapp.Persistence;
-using apiapp.Settings;
+using apiapp.Repository;
 using apiapp.UoW;
 using FirebaseAdmin;
 using Google.Apis.Auth.OAuth2;
@@ -86,9 +87,13 @@ builder.Services
         };
     });
 
+//builder.Services.AddHttpContextAccessor();
+
 builder.Services.AddScoped<IMongoContext, MongoContext>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IAuthenService, AuthenService>();
 
 var app = builder.Build();
 

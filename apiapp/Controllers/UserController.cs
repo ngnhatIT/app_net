@@ -3,21 +3,20 @@ using apiapp.FirebaseAuthService.Service;
 using apiapp.Interfaces;
 using apiapp.Model;
 using apiapp.ViewModel;
-using FirebaseAdmin.Auth;
 using Microsoft.AspNetCore.Mvc;
 
 namespace apiapp.Controllers
 {
+    [Route("[controller]")]
     [ApiController]
-    [Route("api/[controller]")]
     public class UserController : ControllerBase
     {
         private readonly IUserRepository _userRepository;
         private readonly IUnitOfWork _uow;
 
-        private readonly AuthenService _authenService;
+        private readonly IAuthenService _authenService;
 
-        public UserController(IUserRepository userRepository, IUnitOfWork uow, AuthenService authenService)
+        public UserController(IUserRepository userRepository, IUnitOfWork uow, IAuthenService authenService)
         {
             _userRepository = userRepository;
             _uow = uow;

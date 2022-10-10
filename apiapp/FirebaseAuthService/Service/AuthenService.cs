@@ -1,18 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using apiapp.FirebaseAuthService.Interface;
 using apiapp.FirebaseAuthService.Payload;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
 namespace apiapp.FirebaseAuthService.Service
 {
-    public class AuthenService : IFirebaseAuth, IDisposable
+    public class AuthenService : IAuthenService, IDisposable
     {
-        private const string WEB_API_KEY = "";
+        private const string WEB_API_KEY = "AIzaSyAbMNwuwGMmML2Ay3oDgthCHW4W1cSadK0";
         private readonly HttpClient _client;
         private static readonly JsonSerializerSettings jsonSettings = new JsonSerializerSettings
         {
@@ -32,7 +27,7 @@ namespace apiapp.FirebaseAuthService.Service
 
         public async Task<SignUpUserResponse> SignUp(SignUpUserRequest signUpUser)
         {
-            return await Post<SignUpUserResponse>(RelyingPartyUrl("signupNewUser"), signUpUser);
+            return await Post<SignUpUserResponse>(RelyingSignInSignUpUrl("signUp"), signUpUser);
         }
 
         private async Task<TResponse> Post<TResponse>(string endpoint, object request) where TResponse : class
@@ -54,9 +49,9 @@ namespace apiapp.FirebaseAuthService.Service
             }
         }
 
-        private string RelyingPartyUrl(string endpoint)
+        private string RelyingSignInSignUpUrl(string endpoint)
         {
-            return $"https://www.googleapis.com/identitytoolkit/v3/relyingparty/{endpoint}?key={WEB_API_KEY}";
+            return $"https://identitytoolkit.googleapis.com/v1/accounts:{endpoint}?key={WEB_API_KEY}";
         }
         private string SecureTokenUrl()
         {
