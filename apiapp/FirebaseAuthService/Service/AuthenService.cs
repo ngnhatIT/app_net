@@ -1,3 +1,4 @@
+using System.Net;
 using System.Text;
 using apiapp.FirebaseAuthService.Payload;
 using Newtonsoft.Json;
@@ -30,18 +31,26 @@ namespace apiapp.FirebaseAuthService.Service
             return await Post<SignUpUserResponse>(RelyingSignInSignUpUrl("signUp"), signUpUser);
         }
 
+        public async Task VerificationEmail(string idToken)
+        {
+            await Post<SignUpUserResponse>(RelyingVerificationEmail("sendOobCode"), idToken);
+        }
+
         private async Task<TResponse> Post<TResponse>(string endpoint, object request) where TResponse : class
         {
             string responseJson = "";
-
             try
             {
                 var content = JsonConvert.SerializeObject(request, jsonSettings);
                 var payload = new StringContent(content, Encoding.UTF8, "application/json");
                 var response = await _client.PostAsync(endpoint, payload);
-                responseJson = await response.Content.ReadAsStringAsync();
-                response.EnsureSuccessStatusCode();
-                return JsonConvert.DeserializeObject<TResponse>(responseJson);
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    responseJson = await response.Content.ReadAsStringAsync();
+                    response.EnsureSuccessStatusCode();
+                    return JsonConvert.DeserializeObject<TResponse>(responseJson);
+                }
+                return null;
             }
             catch (Exception)
             {
@@ -53,9 +62,17 @@ namespace apiapp.FirebaseAuthService.Service
         {
             return $"https://identitytoolkit.googleapis.com/v1/accounts:{endpoint}?key={WEB_API_KEY}";
         }
+
+        private string RelyingVerificationEmail(string endpoint)
+        {
+            return $"https://identitytoolkit.googleapis.com/v1/accounts:{endpoint}?key={WEB_API_KEY}";
+        }
+
         private string SecureTokenUrl()
         {
             return $"https://securetoken.googleapis.com/v1/token?key={WEB_API_KEY}";
         }
+
+
     }
 }

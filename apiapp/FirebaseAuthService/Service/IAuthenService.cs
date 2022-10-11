@@ -5,5 +5,6 @@ namespace apiapp.FirebaseAuthService.Service
     public interface IAuthenService
     {
         Task<SignUpUserResponse> SignUp(SignUpUserRequest signUpUser);
+        Task VerificationEmail(string idToken);
     }
 }
