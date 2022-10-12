@@ -30,15 +30,14 @@ namespace apiapp.FirebaseAuthService.Service
         {
             return await Post<SignUpUserResponse>(RelyingSignInSignUpUrl("signUp"), signUpUser);
         }
-
-        public async Task VerificationEmail(string idToken)
+        public async Task<VerifyEmailResponse> VerificationEmail(VerifyEmailRequest verifyEmail)
         {
-            await Post<SignUpUserResponse>(RelyingVerificationEmail("sendOobCode"), idToken);
+            return await Post<VerifyEmailResponse>(RelyingVerificationEmailUrl("sendOobCode"), verifyEmail);
         }
 
         private async Task<TResponse> Post<TResponse>(string endpoint, object request) where TResponse : class
         {
-            string responseJson = "";
+            string responseJson = string.Empty;
             try
             {
                 var content = JsonConvert.SerializeObject(request, jsonSettings);
@@ -63,7 +62,7 @@ namespace apiapp.FirebaseAuthService.Service
             return $"https://identitytoolkit.googleapis.com/v1/accounts:{endpoint}?key={WEB_API_KEY}";
         }
 
-        private string RelyingVerificationEmail(string endpoint)
+        private string RelyingVerificationEmailUrl(string endpoint)
         {
             return $"https://identitytoolkit.googleapis.com/v1/accounts:{endpoint}?key={WEB_API_KEY}";
         }
@@ -72,7 +71,5 @@ namespace apiapp.FirebaseAuthService.Service
         {
             return $"https://securetoken.googleapis.com/v1/token?key={WEB_API_KEY}";
         }
-
-
     }
 }
