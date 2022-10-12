@@ -32,6 +32,20 @@ namespace apiapp.Controllers
                 Password = viewModel.PassWord
             };
             SignUpUserResponse signUpUserResponse = await _authenService.SignUp(signUpUser);
+            if (signUpUserResponse == null)
+            {
+                return BadRequest();
+            }
+            VerifyEmailRequest verifyEmailRequest = new VerifyEmailRequest()
+            {
+                IdToken = signUpUserResponse.IdToken,
+                RequestType = "VERIFY_EMAIL"
+            };
+            VerifyEmailResponse verifyEmail = await _authenService.VerificationEmail(verifyEmailRequest);
+            if (verifyEmail == null)
+            {
+
+            }
             await _uow.Commit();
             return Ok();
         }
