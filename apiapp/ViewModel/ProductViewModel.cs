@@ -1,5 +1,3 @@
-
-
 namespace apiapp.ViewModel;
 
 public class ProductViewModel
