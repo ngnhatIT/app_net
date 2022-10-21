@@ -46,8 +46,17 @@ namespace apiapp.Controllers
             {
 
             }
+
+            User user = new User()
+            {
+                Id = signUpUserResponse.LocalId,
+                Email = signUpUserResponse.Email,
+                IdToken = signUpUserResponse.IdToken
+            };
+
+            _userRepository.Add(user);
             await _uow.Commit();
-            return Ok();
+            return Ok(user);
         }
     }
 }

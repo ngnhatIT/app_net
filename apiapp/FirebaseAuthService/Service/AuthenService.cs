@@ -35,6 +35,11 @@ namespace apiapp.FirebaseAuthService.Service
             return await Post<VerifyEmailResponse>(RelyingVerificationEmailUrl("sendOobCode"), verifyEmail);
         }
 
+        public async Task<SignInUserResponse> SignIn(SignInUserRequest signUpUser)
+        {
+            return await Post<SignInUserResponse>(RelyingSignInSignUpUrl("signInWithPassword"), signUpUser);
+        }
+
         private async Task<TResponse> Post<TResponse>(string endpoint, object request) where TResponse : class
         {
             string responseJson = string.Empty;
@@ -71,5 +76,6 @@ namespace apiapp.FirebaseAuthService.Service
         {
             return $"https://securetoken.googleapis.com/v1/token?key={WEB_API_KEY}";
         }
+
     }
 }
