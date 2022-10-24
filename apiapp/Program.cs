@@ -22,8 +22,10 @@ builder.Services.AddEndpointsApiExplorer();
 
 FirebaseApp.Create(new AppOptions
 {
-    Credential = GoogleCredential.FromFile(@".\mongo-net-firebase-adminsdk-x3ugi-3598ee17bf.json")
+    Credential = GoogleCredential.FromFile(@"C:\Users\nk_nhat\Desktop\app_net\apiapp\mongo-net-firebase-adminsdk-x3ugi-3598ee17bf.json")
 });
+
+
 
 builder.Services.AddSwaggerGen(options =>
 {
@@ -87,7 +89,7 @@ builder.Services
         };
     });
 
-//builder.Services.AddHttpContextAccessor();
+builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddScoped<IMongoContext, MongoContext>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -103,9 +105,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-app.UseRouting();
 
-app.UseHttpsRedirection();
+
+
+app.UseRouting();
 
 app.UseAuthentication();
 

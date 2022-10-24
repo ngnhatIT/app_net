@@ -1,13 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
 namespace apiapp.FirebaseAuthService.Payload
 {
-    public class SignInUserResponse
+    public class SignInUserResponse : BaseResponse
     {
         public string LocalId { get; set; }
+        public string Email { get; set; }
         public string DisplayName { get; set; }
         public string IdToken { get; set; }
         public string Registered { get; set; }

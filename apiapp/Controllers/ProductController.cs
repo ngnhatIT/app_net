@@ -30,6 +30,7 @@ public class ProductController : ControllerBase
     }
 
     [HttpGet("{id}")]
+    [Authorize]
     public async Task<ActionResult<Product>> Get(Guid id)
     {
         var product = await _productRepository.GetById(id);
@@ -48,6 +49,7 @@ public class ProductController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize]
     public async Task<ActionResult<Product>> Post([FromBody] ProductViewModel value)
     {
         var product = new Product(value.Description);
@@ -66,6 +68,7 @@ public class ProductController : ControllerBase
     }
 
     [HttpPut("{id}")]
+    [Authorize]
     public async Task<ActionResult<Product>> Put(Guid id, [FromBody] ProductViewModel value)
     {
         var product = new Product(id, value.Description);
@@ -78,6 +81,7 @@ public class ProductController : ControllerBase
     }
 
     [HttpDelete("{id}")]
+    [Authorize]
     public async Task<ActionResult> Delete(Guid id)
     {
         _productRepository.Remove(id);

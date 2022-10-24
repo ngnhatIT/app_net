@@ -24,18 +24,37 @@ namespace apiapp.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<User>> Post([FromBody] UserViewModel viewModel)
+        [Route("SignIn")]
+        public async Task<ActionResult<SignInUserResponse>> SignIn([FromBody] SignInUserRequest request)
         {
-            SignUpUserRequest signUpUser = new SignUpUserRequest()
+            SignInUserResponse signInUserResponse = new SignInUserResponse();
+            try
             {
-                Email = viewModel.Email,
-                Password = viewModel.PassWord
-            };
-            SignUpUserResponse signUpUserResponse = await _authenService.SignUp(signUpUser);
-            if (signUpUserResponse == null)
-            {
-                return BadRequest();
+                signInUserResponse = await _authenService.SignIn(request);
+
             }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+            return Ok(signInUserResponse);
+        }
+
+        [HttpPost]
+        [Route("SignUp")]
+        public async Task<ActionResult<User>> SignUp([FromBody] SignUpUserRequest request)
+        {
+            SignUpUserResponse signUpUserResponse = new SignUpUserResponse();
+            try
+            {
+                signUpUserResponse = await _authenService.SignUp(request);
+
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+
             VerifyEmailRequest verifyEmailRequest = new VerifyEmailRequest()
             {
                 IdToken = signUpUserResponse.IdToken,

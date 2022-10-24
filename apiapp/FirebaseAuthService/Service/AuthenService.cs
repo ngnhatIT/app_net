@@ -1,5 +1,6 @@
 using System.Net;
 using System.Text;
+using apiapp.FirebaseAuthService.ExceptionAuth;
 using apiapp.FirebaseAuthService.Payload;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
@@ -48,17 +49,29 @@ namespace apiapp.FirebaseAuthService.Service
                 var content = JsonConvert.SerializeObject(request, jsonSettings);
                 var payload = new StringContent(content, Encoding.UTF8, "application/json");
                 var response = await _client.PostAsync(endpoint, payload);
-                if (response.StatusCode == HttpStatusCode.OK)
-                {
-                    responseJson = await response.Content.ReadAsStringAsync();
-                    response.EnsureSuccessStatusCode();
-                    return JsonConvert.DeserializeObject<TResponse>(responseJson);
-                }
-                return null;
+                responseJson = await response.Content.ReadAsStringAsync();
+                response.EnsureSuccessStatusCode();
+                return JsonConvert.DeserializeObject<TResponse>(responseJson);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                return null;
+                try
+                {
+                    var errorResponse = JsonConvert.DeserializeObject<FirebaseErrorResponse>(responseJson, jsonSettings);
+                    throw new FirebaseAuthException(errorResponse.Error.Message, e)
+                    {
+                        Error = errorResponse.Error,
+                        ResponseJson = responseJson
+                    };
+                }
+                catch (JsonSerializationException ex)
+                {
+                    throw new FirebaseAuthException("Deserializing Firebase Auth API response failed", ex)
+                    {
+                        OriginRequestException = e,
+                        ResponseJson = responseJson
+                    };
+                }
             }
         }
 
