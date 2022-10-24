@@ -1,3 +1,4 @@
+using System.IdentityModel.Tokens.Jwt;
 using apiapp.FirebaseAuthService.Payload;
 using apiapp.FirebaseAuthService.Service;
 using apiapp.Interfaces;
@@ -31,13 +32,19 @@ namespace apiapp.Controllers
             try
             {
                 signInUserResponse = await _authenService.SignIn(request);
-
             }
             catch (Exception e)
             {
                 return BadRequest(e.Message);
             }
-            return Ok(signInUserResponse);
+
+            bool hasVerifyEmail = CheckEmailViryfied(signInUserResponse.IdToken);
+
+            if (hasVerifyEmail)
+            {
+                return Ok(signInUserResponse);
+            }
+            return BadRequest("Email not verified");
         }
 
         [HttpPost]
@@ -45,10 +52,10 @@ namespace apiapp.Controllers
         public async Task<ActionResult<User>> SignUp([FromBody] SignUpUserRequest request)
         {
             SignUpUserResponse signUpUserResponse = new SignUpUserResponse();
+            VerifyEmailResponse verifyEmail = new VerifyEmailResponse();
             try
             {
                 signUpUserResponse = await _authenService.SignUp(request);
-
             }
             catch (Exception e)
             {
@@ -60,10 +67,14 @@ namespace apiapp.Controllers
                 IdToken = signUpUserResponse.IdToken,
                 RequestType = "VERIFY_EMAIL"
             };
-            VerifyEmailResponse verifyEmail = await _authenService.VerificationEmail(verifyEmailRequest);
-            if (verifyEmail == null)
-            {
 
+            try
+            {
+                verifyEmail = await _authenService.VerificationEmail(verifyEmailRequest);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
             }
 
             User user = new User()
@@ -74,8 +85,26 @@ namespace apiapp.Controllers
             };
 
             _userRepository.Add(user);
-            await _uow.Commit();
+            bool isCommit = await _uow.Commit();
+            if (isCommit)
+            {
+
+            }
+            else
+            {
+
+            }
             return Ok(user);
+        }
+
+        private bool CheckEmailViryfied(string token)
+        {
+            var handler = new JwtSecurityTokenHandler();
+            var jwtSecurityToken = handler.ReadJwtToken(token);
+            var claims = jwtSecurityToken.Claims.ToList();
+            var emailVerified = claims.FirstOrDefault(x => x.Type == "email_verified").Value;
+            bool.TryParse(emailVerified, out bool hasVerifyEmail);
+            return hasVerifyEmail;
         }
     }
 }

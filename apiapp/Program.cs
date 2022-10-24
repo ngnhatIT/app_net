@@ -22,7 +22,7 @@ builder.Services.AddEndpointsApiExplorer();
 
 FirebaseApp.Create(new AppOptions
 {
-    Credential = GoogleCredential.FromFile(@"C:\Users\nk_nhat\Desktop\app_net\apiapp\mongo-net-firebase-adminsdk-x3ugi-3598ee17bf.json")
+    Credential = GoogleCredential.FromFile(@".\mongo-net-firebase-adminsdk-x3ugi-3598ee17bf.json")
 });
 
 
