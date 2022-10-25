@@ -20,9 +20,12 @@ builder.Services.AddMvc();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 
+var p = AppDomain.CurrentDomain.BaseDirectory;
+var pathJson = Path.Combine(p, "mongo-net-firebase-adminsdk-x3ugi-3598ee17bf.json");
+//var path = Path.Combine(HttpRuntime.AppDomainAppPath , "data.json");
 FirebaseApp.Create(new AppOptions
 {
-    Credential = GoogleCredential.FromFile(@".\mongo-net-firebase-adminsdk-x3ugi-3598ee17bf.json")
+    Credential = GoogleCredential.FromFile(pathJson)
 });
 
 
@@ -100,12 +103,11 @@ builder.Services.AddScoped<IAuthenService, AuthenService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
+// if (app.Environment.IsDevelopment())
+// {
+//     app.UseSwagger();
+//     app.UseSwaggerUI();
+// }
 
 
 app.UseRouting();
