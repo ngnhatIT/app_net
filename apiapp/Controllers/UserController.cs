@@ -4,6 +4,7 @@ using apiapp.FirebaseAuthService.Service;
 using apiapp.Interfaces;
 using apiapp.Model;
 using apiapp.ViewModel.User.SignIn;
+using apiapp.ViewModel.User.SignUp;
 using Microsoft.AspNetCore.Mvc;
 
 namespace apiapp.Controllers
@@ -59,21 +60,26 @@ namespace apiapp.Controllers
 
         [HttpPost]
         [Route("SignUp")]
-        public async Task<ActionResult<User>> SignUp([FromBody] SignUpUserRequest request)
+        public async Task<ActionResult<User>> SignUp([FromBody] SignUpRequest request)
         {
             SignUpUserResponse signUpUserResponse = new SignUpUserResponse();
             VerifyEmailResponse verifyEmail = new VerifyEmailResponse();
             try
             {
-                signUpUserResponse = await _authenService.SignUp(request);
-
-                VerifyEmailRequest verifyEmailRequest = new VerifyEmailRequest()
+                SignUpUserRequest signUp = new SignUpUserRequest()
                 {
-                    IdToken = signUpUserResponse.IdToken,
-                    RequestType = "VERIFY_EMAIL"
+                    Email = request.Email,
+                    Password = request.Password
                 };
+                signUpUserResponse = await _authenService.SignUp(signUp);
 
-                verifyEmail = await _authenService.VerificationEmail(verifyEmailRequest);
+                // VerifyEmailRequest verifyEmailRequest = new VerifyEmailRequest()
+                // {
+                //     IdToken = signUpUserResponse.IdToken,
+                //     RequestType = "VERIFY_EMAIL"
+                // };
+
+                //verifyEmail = await _authenService.VerificationEmail(verifyEmailRequest);
             }
             catch (Exception e)
             {
@@ -89,7 +95,7 @@ namespace apiapp.Controllers
 
             _userRepository.Add(user);
             bool isCommit = await _uow.Commit();
-            return isCommit ? Ok(user) : BadRequest("");
+            return isCommit ? Ok(user) : BadRequest("Đăng ký tài khoản thất bại");
         }
 
         private bool CheckEmailVerified(string token)
