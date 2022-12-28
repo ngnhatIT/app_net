@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\nk_nhat\\Desktop\\app_net\\apiapp\\apiapp.csproj": {}
+    "C:\\Users\\nk_nhat\\Desktop\\app\\app_net\\apiapp\\apiapp.csproj": {}
   },
   "projects": {
-    "C:\\Users\\nk_nhat\\Desktop\\app_net\\apiapp\\apiapp.csproj": {
+    "C:\\Users\\nk_nhat\\Desktop\\app\\app_net\\apiapp\\apiapp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\nk_nhat\\Desktop\\app_net\\apiapp\\apiapp.csproj",
+        "projectUniqueName": "C:\\Users\\nk_nhat\\Desktop\\app\\app_net\\apiapp\\apiapp.csproj",
         "projectName": "apiapp",
-        "projectPath": "C:\\Users\\nk_nhat\\Desktop\\app_net\\apiapp\\apiapp.csproj",
+        "projectPath": "C:\\Users\\nk_nhat\\Desktop\\app\\app_net\\apiapp\\apiapp.csproj",
         "packagesPath": "C:\\Users\\nk_nhat\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\nk_nhat\\Desktop\\app_net\\apiapp\\obj\\",
+        "outputPath": "C:\\Users\\nk_nhat\\Desktop\\app\\app_net\\apiapp\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

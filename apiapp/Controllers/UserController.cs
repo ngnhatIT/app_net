@@ -3,7 +3,7 @@ using apiapp.FirebaseAuthService.Payload;
 using apiapp.FirebaseAuthService.Service;
 using apiapp.Interfaces;
 using apiapp.Model;
-using apiapp.ViewModel;
+using apiapp.ViewModel.User.SignIn;
 using Microsoft.AspNetCore.Mvc;
 
 namespace apiapp.Controllers
@@ -26,23 +26,33 @@ namespace apiapp.Controllers
 
         [HttpPost]
         [Route("SignIn")]
-        public async Task<ActionResult<SignInUserResponse>> SignIn([FromBody] SignInUserRequest request)
+        public async Task<ActionResult<SignInUserResponse>> SignIn([FromBody] SignInRequest request)
         {
             SignInUserResponse signInUserResponse = new SignInUserResponse();
             try
             {
-                signInUserResponse = await _authenService.SignIn(request);
+                SignInUserRequest signIn = new SignInUserRequest()
+                {
+                    Email = request.Email,
+                    Password = request.Password
+                };
+                signInUserResponse = await _authenService.SignIn(signIn);
             }
             catch (Exception e)
             {
                 return BadRequest(e.Message);
             }
 
-            bool hasVerifyEmail = CheckEmailViryfied(signInUserResponse.IdToken);
+            bool hasVerifyEmail = CheckEmailVerified(signInUserResponse.IdToken);
 
             if (hasVerifyEmail)
             {
-                return Ok(signInUserResponse);
+                SignInResponse response = new SignInResponse()
+                {
+                    IdToken = signInUserResponse.IdToken,
+                    DisplayName = signInUserResponse.DisplayName
+                };
+                return Ok(response);
             }
             return BadRequest("Email not verified");
         }
@@ -56,20 +66,13 @@ namespace apiapp.Controllers
             try
             {
                 signUpUserResponse = await _authenService.SignUp(request);
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e.Message);
-            }
 
-            VerifyEmailRequest verifyEmailRequest = new VerifyEmailRequest()
-            {
-                IdToken = signUpUserResponse.IdToken,
-                RequestType = "VERIFY_EMAIL"
-            };
+                VerifyEmailRequest verifyEmailRequest = new VerifyEmailRequest()
+                {
+                    IdToken = signUpUserResponse.IdToken,
+                    RequestType = "VERIFY_EMAIL"
+                };
 
-            try
-            {
                 verifyEmail = await _authenService.VerificationEmail(verifyEmailRequest);
             }
             catch (Exception e)
@@ -86,19 +89,12 @@ namespace apiapp.Controllers
 
             _userRepository.Add(user);
             bool isCommit = await _uow.Commit();
-            if (isCommit)
-            {
-
-            }
-            else
-            {
-
-            }
-            return Ok(user);
+            return isCommit ? Ok(user) : BadRequest("");
         }
 
-        private bool CheckEmailViryfied(string token)
+        private bool CheckEmailVerified(string token)
         {
+            if (string.IsNullOrEmpty(token)) return false;
             var handler = new JwtSecurityTokenHandler();
             var jwtSecurityToken = handler.ReadJwtToken(token);
             var claims = jwtSecurityToken.Claims.ToList();
